@@ -21,7 +21,7 @@ export default class HomeScreen extends Component {
             ToastAndroid.show("Feedback Cannot be empty", ToastAndroid.SHORT)
 
         }else
-        if (this.state.input.split(" ").length<=10) {
+        if (this.state.input.split(" ").length<=2) {
             ToastAndroid.show("Feedback should have min of 10 words", ToastAndroid.SHORT)
 
         }
@@ -31,7 +31,7 @@ export default class HomeScreen extends Component {
 
         }).then((response) => {
             console.log(response.status, "response data " + JSON.stringify(response.data))
-            res=response.data
+            var res=response.data
             this.props.navigation.navigate("GraphScreen",{
                 res
             })
