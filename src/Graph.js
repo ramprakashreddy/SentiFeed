@@ -8,91 +8,70 @@ import {
     View,
     Text,
     StatusBar,
-    Dimensions
+    Dimensions,
+    Image,
+    ImageBackground
 } from 'react-native';
-import {
-    LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph,
-    StackedBarChart
-} from "react-native-chart-kit";
+
 import LottieView from 'lottie-react-native';
+import { PieChart } from 'react-native-svg-charts'
 import axios from 'axios';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 
 export default GraphScreen = ({ route }) => {
-    // console.log(route)
-    const value = route.params.res;
-    console.log(value)
-    const [data, setData] = React.useState("")
+
+    //console.log(route)
+    const value = route.params.res.ModelResponse;
+    console.log("asssssssssssssssssssssssd", value)
+    const userInput = route.params.input
+    const [data, setData] = React.useState([])
     const [loading, setLoading] = React.useState(true)
 
     useEffect(() => {
-        setTimeout(() => {
-            setLoading(false)
-        }, 500)
 
 
-        axios.get("http://13.233.186.159:5500/test2").then((response) => {
-            console.log(JSON.stringify(response.data))
-            setData(response.data)
-            //it was a good workshop
+        axios.get("http://13.233.186.159:5500/test2").then((res) => {
+            console.log("data is", res)
 
-        }).catch((error => {
+            var chartData = [
+                {
+                    key: 1,
+                    value: res.data.Positive,
+                    svg: { fill: '#5f89c0' },
+
+                },
+                {
+                    key: 2,
+                    value: res.data.Negative,
+                    svg: { fill: '#26538e' },
+                    arc: { outerRadius: '108%' }
+                },
+
+
+            ]
+            //console.log("DATTTTTTTTTTTTTTT", chartData)
+            setData(chartData)
+            setTimeout(() => {
+                setLoading(false)
+            }, 1500)
+        }).catch((error) => {
             console.log(error)
         })
-        )
 
     }, [])
-    const data1 = [
-        {
-            name: " ",
-            Value: 0,
-        },
 
-        {
-            name: "Positive",
-            Value: data.Positive,
-            color: "#02bd08",
-            legendFontColor: "#7F7F7F",
-            legendFontSize: 18,
 
-        },
-        {
-            name: "Negative",
-            Value: data.Negative,
-            color: "#F00",
-            legendFontColor: "#7F7F7F",
-            legendFontSize: 18
-        },
-        {
-            name: " ",
-            Value: 0,
-        },
 
-    ];
-    const chartConfig = {
-        backgroundGradientFrom: "#1E2923",
-        backgroundGradientFromOpacity: 0,
-        backgroundGradientTo: "#08130D",
-        backgroundGradientToOpacity: 0.5,
-        color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-        strokeWidth: 2, // optional, default 3
-        barPercentage: 0.5,
-
-        useShadowColorFromDataset: false,// optional
-
-    };
-    const screenWidth = Dimensions.get("window").width
-    const screenHeight = Dimensions.get("window").height
+    const width = Dimensions.get("screen").width
+    const height = Dimensions.get("screen").height
+    var lottie_source = value == "positive" ? require("../src/Lottie/562-emoji-reaction.json") : require("../src/Lottie/488-angry-emoji.json")
 
     return (
         loading ?
 
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
                 <LottieView source={require('../src/Lottie/927-triangle-loading.json')}
                     autoPlay={true}
                     loop={true}
@@ -105,35 +84,123 @@ export default GraphScreen = ({ route }) => {
 
                 />
 
-            </View> :
-            <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
-
-                <View style={{ flex: 1, alignItems: 'center' }}>
-                    <Text style={{ fontSize: 24, marginTop: 80 }}>
-                        Thank You for Your Feedback !{'\n'}
+            </View > :
+            <View style={{ flex: 1 }}>
+                <ImageBackground
+                    source={require("../src/images/BG.png")}
+                    resizeMode={"cover"}
+                    style={{ height: height, width: width }}
+                >
+                    <View style={{ flex: 0.6, paddingLeft: "4%" }}>
+                        <Text style={{ color: "#26538e", fontSize: 28, fontWeight: "bold", marginTop: "5%" }}>
+                            Lets see the Results now
                     </Text>
-                    <Text style={{ fontSize: 20, marginTop: 5 }}>
-                        Your Feedback was {value.ModelResponse}
+                        <Text>
+                            Sentifeed provides you with your individual feedback {"\n"} as well as total count
                     </Text>
 
-                </View>
-                <View style={{ flex: 2, marginTop: -10 }}>
-                    <PieChart
-                        data={data1}
-                        width={screenWidth}
-                        height={280}
-                        chartConfig={chartConfig}
-                        accessor={"Value"}
-                        backgroundColor={"transparent"}
-                        paddingLeft={20}
-                        center={[5, 2]}
-                        style={{
-                            marginTop: 10
-                        }}
-                    />
-                </View>
+                    </View>
+                    <View style={{ flex: 1, }}>
+                        <Text style={{
+                            color: "#26538e", fontSize: 18, fontWeight: "bold", marginTop: "2%"
+                            , marginBottom: "3%", paddingLeft: "4%"
+                        }}>
+                            You Statement was -
+                    </Text>
+                        <ScrollView
+                            contentContainerStyle={{
+                                backgroundColor: "#fcfcfc", width: width - 40,
+                                padding: "3%", alignSelf: "center"
+                            }}
+                            showsVerticalScrollIndicator={false}
+                        >
+                            <Text style={{ padding: "1%" }}>
+                                {userInput}
+                            </Text>
 
-            </View>
+                        </ScrollView>
+
+                    </View>
+                    <View style={{ flex: 1, marginTop: "4%" }}>
+                        <Text style={{
+                            color: "#26538e", fontSize: 18, fontWeight: "bold", paddingLeft: "4%"
+                        }}>
+                            Your Individual Sentiment -
+                    </Text>
+
+                        <View style={{
+                            flexDirection: 'row', justifyContent: "center"
+                        }}>
+
+                            <LottieView source={lottie_source}
+                                autoPlay={true}
+                                loop={true}
+                                style={{
+                                    alignSelf: 'center',
+                                    width: width / 2.5,
+                                    height: width / 2.5,
+                                }} />
+                            <TouchableOpacity style={{
+                                backgroundColor: "transparent",
+                                height: height / 20, width: "55%", marginLeft: "35%",
+                                justifyContent: 'center', borderRadius: 3, marginTop: "4%",
+                                borderWidth: 1.2, borderColor: value == "positive" ? "#5ed071" : "#dd4f43", marginTop: "30%"
+                            }}
+                                disabled={true}
+                            >
+                                <Text style={{ alignSelf: 'center', color: value == "positive" ? "#5ed071" : "#dd4f43" }}>
+                                    {value == "positive" ? "POSITIVE" : "NEGATIVE"}
+                                </Text>
+                            </TouchableOpacity>
+
+                        </View>
+
+                    </View>
+                    <View style={{ flex: 2 }}>
+                        <Text style={{
+                            color: "#26538e", fontSize: 18, fontWeight: "bold", paddingLeft: "4%"
+                        }}>
+                            Overall Results -
+                    </Text>
+
+                        <View style={{ flex: 1, flexDirection: 'row', marginTop: "5%" }}>
+
+                            < PieChart
+                                style={{ height: "55%", width: "55%" }}
+                                outerRadius={'80%'}
+                                innerRadius={2}
+                                data={data}
+                            />
+                            <View>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: "40%" }}>
+                                    <View
+                                        style={{ height: 20, width: 20, backgroundColor: "#5f89c0" }}
+                                    />
+                                    <Text style={{ fontSize: 16, marginLeft: "8%" }}>
+                                        Positive {(data[0].value / (data[0].value + data[1].value) * 100).toFixed(2)} %
+                                    </Text>
+                                </View>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: "8%" }}>
+                                    <View
+                                        style={{ height: 20, width: 20, backgroundColor: "#26538e" }}
+                                    />
+                                    <Text style={{ fontSize: 16, marginLeft: "8%" }}>
+                                        Negative {(data[1].value / (data[0].value + data[1].value) * 100).toFixed(2)} %
+
+                                    </Text>
+                                </View>
+
+                            </View>
+                        </View>
+
+                    </View>
+
+
+                </ImageBackground>
+
+
+
+            </View >
     );
 }
 

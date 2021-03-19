@@ -4,6 +4,7 @@ import {
   StyleSheet,
   ScrollView,
   View,
+  Image,
   Text,
   StatusBar,
 } from 'react-native';
@@ -21,18 +22,36 @@ const App = () => {
       <Stack.Navigator initialRouteName="HomeScreen"
         screenOptions={{
           headerStyle: {
-            backgroundColor: "#ffff"
+            backgroundColor: "#dbf0f7"
           }
         }}
       >
         <Stack.Screen name="HomeScreen" component={Home}
           options={{
-            headerTitle: "Home"
+            title: "",
+            headerLeft: () => (
+              <View style={{ marginLeft: 20 }}>
+                <Image
+                  source={require("./src/images/Header.png")}
+                  style={{ width: 180, height: 30 }}
+                />
+              </View>
+            ),
+
           }}
         />
         <Stack.Screen name="GraphScreen" component={Graph}
           options={{
-            headerTitle: "Results"
+            title: "",
+            headerLeft: () => (
+              <View style={{ marginLeft: 10 }}>
+                <Image
+                  source={require("./src/images/Header.png")}
+                  style={{ width: 180, height: 30 }}
+                />
+              </View>
+            ),
+
           }}
         />
 
