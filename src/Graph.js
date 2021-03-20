@@ -22,16 +22,13 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default GraphScreen = ({ route }) => {
 
-    //console.log(route)
     const value = route.params.res.ModelResponse;
-    console.log("asssssssssssssssssssssssd", value)
+    console.log("value", value)
     const userInput = route.params.input
     const [data, setData] = React.useState([])
     const [loading, setLoading] = React.useState(true)
 
     useEffect(() => {
-
-
         axios.get("http://13.233.186.159:5500/test2").then((res) => {
             console.log("data is", res)
 
@@ -51,7 +48,6 @@ export default GraphScreen = ({ route }) => {
 
 
             ]
-            //console.log("DATTTTTTTTTTTTTTT", chartData)
             setData(chartData)
             setTimeout(() => {
                 setLoading(false)
@@ -75,7 +71,6 @@ export default GraphScreen = ({ route }) => {
                 <LottieView source={require('../src/Lottie/927-triangle-loading.json')}
                     autoPlay={true}
                     loop={true}
-                    //resizeMode="contain"
                     style={{
                         width: Dimensions.get("window").width - 10,
                         aspectRatio: Dimensions.get("window").width / Dimensions.get("window").width,
@@ -186,20 +181,13 @@ export default GraphScreen = ({ route }) => {
                                     />
                                     <Text style={{ fontSize: 16, marginLeft: "8%" }}>
                                         Negative {(data[1].value / (data[0].value + data[1].value) * 100).toFixed(2)} %
-
                                     </Text>
                                 </View>
-
                             </View>
                         </View>
-
                     </View>
 
-
                 </ImageBackground>
-
-
-
             </View >
     );
 }
