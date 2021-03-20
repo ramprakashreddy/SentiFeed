@@ -7,14 +7,9 @@ export default HomeScreen = ({ navigation }) => {
     const [input, setInput] = React.useState("")
     const [disabled, setDisabled] = useState(true)
     function apiCall() {
-        //     this.props.navigation.navigate("GraphScreen")
-        //console.log("http://13.233.186.159:3000/" + input.trim())
-
         axios.post("http://13.233.186.159:5500/test/" + input.trim()).then((response) => {
-            console.log(response.data)
             console.log(response.status, "response data " + response.data)
             var res = response.data
-            // console.log(res)
             navigation.navigate("GraphScreen", {
                 res,
                 input
@@ -24,7 +19,6 @@ export default HomeScreen = ({ navigation }) => {
             console.log(error)
             ToastAndroid.show("ERROR OCCURED PLEASE TRY AFTER SOMETIME", ToastAndroid.SHORT)
         }).finally(() => {
-            console.log("SETTED")
             setInput("")
             setDisabled(true)
         })
@@ -110,7 +104,6 @@ export default HomeScreen = ({ navigation }) => {
                         <LottieView source={require('../src/Lottie/lottie2.json')}
                             autoPlay={true}
                             loop={true}
-                            //resizeMode="contain"
                             style={{
                                 alignSelf: 'center',
                                 width: width - 10,
@@ -123,91 +116,7 @@ export default HomeScreen = ({ navigation }) => {
 
                 </View>
             </ImageBackground>
-
-            {/* <View style={{flex:1,justifyContent:'center'}}>
-
-                <TextInput
-                    placeholder="Please Provide the Feedback"
-                    placeholderTextColor="#777777"
-                    multiline={true}
-                    value={input}
-                    style={styles.textInputStyle}
-                    onChangeText={(txt) => {
-                      setInput(txt);
-                    
-                    }}
-
-                />
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => {
-                        apiCall()
-                    }}
-                >
-                    <Text
-                        style={{
-                            fontSize: 20
-                        }}
-                    >
-                        Submit
-                      
-                    </Text>
-                </TouchableOpacity>
-            </View>
-            <View style={{flex:1}}>
-                <LottieView source={require('../src/Lottie/lottie2.json')}
-                    autoPlay={true}
-                    loop={true}
-                    //resizeMode="contain"
-                    style={{
-                        width: Dimensions.get("window").width - 10,
-                        aspectRatio: Dimensions.get("window").width / Dimensions.get("window").width,
-                    }}
-
-
-                />
-
-            </View> */}
-
         </View >
 
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fcfcfc'
-    },
-    button: {
-        backgroundColor: "#548aff",
-        height: "auto",
-        paddingTop: 14,
-        paddingBottom: 14,
-        borderRadius: 5,
-        width: Dimensions.get("window").width - 40,
-        alignSelf: 'center',
-        elevation: 5,
-        marginTop: 40,
-        justifyContent: 'center',
-        alignItems: 'center'
-
-    },
-    textInputStyle: {
-
-        padding: 10,
-        paddingTop: 20,
-        paddingLeft: 20,
-        fontSize: 15,
-        backgroundColor: "#ffffff",
-        height: Dimensions.get("window").height - 600,
-        width: Dimensions.get("window").width - 65,
-        textAlignVertical: "top",
-        borderRadius: 5,
-        elevation: 3.5,
-        alignSelf: 'center'
-
-
-    }
-
-})
