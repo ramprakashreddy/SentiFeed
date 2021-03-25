@@ -26,10 +26,8 @@ export default GraphScreen = ({ route }) => {
     console.log("value", value)
     const userInput = route.params.input
     const [data, setData] = React.useState([])
-    const [loading, setLoading] = React.useState(true)
-
     useEffect(() => {
-        axios.get("http://13.233.186.159:5500/test2").then((res) => {
+        axios.get("https://triton300.herokuapp.com/test2").then((res) => {
             console.log("data is", res)
 
             var chartData = [
@@ -49,11 +47,10 @@ export default GraphScreen = ({ route }) => {
 
             ]
             setData(chartData)
-            setTimeout(() => {
-                setLoading(false)
-            }, 1500)
+
         }).catch((error) => {
             console.log(error)
+
         })
 
     }, [])
@@ -65,99 +62,85 @@ export default GraphScreen = ({ route }) => {
     var lottie_source = value == "positive" ? require("../src/Lottie/562-emoji-reaction.json") : require("../src/Lottie/488-angry-emoji.json")
 
     return (
-        loading ?
 
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-                <LottieView source={require('../src/Lottie/927-triangle-loading.json')}
-                    autoPlay={true}
-                    loop={true}
-                    style={{
-                        width: Dimensions.get("window").width - 10,
-                        aspectRatio: Dimensions.get("window").width / Dimensions.get("window").width,
-                    }}
-
-
-                />
-
-            </View > :
-            <View style={{ flex: 1 }}>
-                <ImageBackground
-                    source={require("../src/images/BG.png")}
-                    resizeMode={"cover"}
-                    style={{ height: height, width: width }}
-                >
-                    <View style={{ flex: 0.6, paddingLeft: "4%" }}>
-                        <Text style={{ color: "#26538e", fontSize: 28, fontWeight: "bold", marginTop: "5%" }}>
-                            Lets see the Results now
+        <View style={{ flex: 1 }}>
+            <ImageBackground
+                source={require("../src/images/BG.png")}
+                resizeMode={"cover"}
+                style={{ height: height, width: width }}
+            >
+                <View style={{ flex: 0.6, paddingLeft: "4%" }}>
+                    <Text style={{ color: "#26538e", fontSize: 28, fontWeight: "bold", marginTop: "5%" }}>
+                        Lets see the Results now
                     </Text>
-                        <Text>
-                            Sentifeed provides you with your individual feedback {"\n"} as well as total count
+                    <Text>
+                        Sentifeed provides you with your individual feedback {"\n"}as well as total count
                     </Text>
 
-                    </View>
-                    <View style={{ flex: 1, }}>
-                        <Text style={{
-                            color: "#26538e", fontSize: 18, fontWeight: "bold", marginTop: "2%"
-                            , marginBottom: "3%", paddingLeft: "4%"
-                        }}>
-                            You Statement was -
+                </View>
+                <View style={{ flex: 1 }}>
+                    <Text style={{
+                        color: "#26538e", fontSize: 18, fontWeight: "bold", marginTop: "2%"
+                        , marginBottom: "3%", paddingLeft: "4%"
+                    }}>
+                        You Statement was -
                     </Text>
-                        <ScrollView
-                            contentContainerStyle={{
-                                backgroundColor: "#fcfcfc", width: width - 40,
-                                padding: "3%", alignSelf: "center"
-                            }}
-                            showsVerticalScrollIndicator={false}
+                    <ScrollView
+                        contentContainerStyle={{
+                            backgroundColor: "#fcfcfc", width: width - 40,
+                            padding: "3%", alignSelf: "center"
+                        }}
+                        showsVerticalScrollIndicator={false}
+                    >
+                        <Text style={{ padding: "1%" }}>
+                            {userInput}
+                        </Text>
+
+                    </ScrollView>
+
+                </View>
+                <View style={{ flex: 1, marginTop: "4%" }}>
+                    <Text style={{
+                        color: "#26538e", fontSize: 18, fontWeight: "bold", paddingLeft: "4%"
+                    }}>
+                        Your Individual Sentiment -
+                    </Text>
+
+                    <View style={{
+                        flexDirection: 'row', justifyContent: "center"
+                    }}>
+
+                        <LottieView source={lottie_source}
+                            autoPlay={true}
+                            loop={true}
+                            style={{
+                                alignSelf: 'center',
+                                width: width / 2.5,
+                                height: width / 2.5,
+                            }} />
+                        <TouchableOpacity style={{
+                            backgroundColor: "transparent",
+                            height: height / 20, width: "55%", marginLeft: "35%",
+                            justifyContent: 'center', borderRadius: 3, marginTop: "4%",
+                            borderWidth: 1.2, borderColor: value == "positive" ? "#5ed071" : "#dd4f43", marginTop: "30%"
+                        }}
+                            disabled={true}
                         >
-                            <Text style={{ padding: "1%" }}>
-                                {userInput}
+                            <Text style={{ alignSelf: 'center', color: value == "positive" ? "#5ed071" : "#dd4f43" }}>
+                                {value == "positive" ? "POSITIVE" : "NEGATIVE"}
                             </Text>
-
-                        </ScrollView>
-
-                    </View>
-                    <View style={{ flex: 1, marginTop: "4%" }}>
-                        <Text style={{
-                            color: "#26538e", fontSize: 18, fontWeight: "bold", paddingLeft: "4%"
-                        }}>
-                            Your Individual Sentiment -
-                    </Text>
-
-                        <View style={{
-                            flexDirection: 'row', justifyContent: "center"
-                        }}>
-
-                            <LottieView source={lottie_source}
-                                autoPlay={true}
-                                loop={true}
-                                style={{
-                                    alignSelf: 'center',
-                                    width: width / 2.5,
-                                    height: width / 2.5,
-                                }} />
-                            <TouchableOpacity style={{
-                                backgroundColor: "transparent",
-                                height: height / 20, width: "55%", marginLeft: "35%",
-                                justifyContent: 'center', borderRadius: 3, marginTop: "4%",
-                                borderWidth: 1.2, borderColor: value == "positive" ? "#5ed071" : "#dd4f43", marginTop: "30%"
-                            }}
-                                disabled={true}
-                            >
-                                <Text style={{ alignSelf: 'center', color: value == "positive" ? "#5ed071" : "#dd4f43" }}>
-                                    {value == "positive" ? "POSITIVE" : "NEGATIVE"}
-                                </Text>
-                            </TouchableOpacity>
-
-                        </View>
+                        </TouchableOpacity>
 
                     </View>
-                    <View style={{ flex: 2 }}>
-                        <Text style={{
-                            color: "#26538e", fontSize: 18, fontWeight: "bold", paddingLeft: "4%"
-                        }}>
-                            Overall Results -
-                    </Text>
 
+                </View>
+                <View style={{ flex: 2 }}>
+                    <Text style={{
+                        color: "#26538e", fontSize: 18, fontWeight: "bold", paddingLeft: "4%"
+                    }}>
+                        Overall Results -
+                    </Text>
+                    {data.length > 0 ?
                         <View style={{ flex: 1, flexDirection: 'row', marginTop: "5%" }}>
 
                             < PieChart
@@ -184,11 +167,19 @@ export default GraphScreen = ({ route }) => {
                                     </Text>
                                 </View>
                             </View>
+                        </View> : <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <Text>
+                                NO DATA
+                            </Text>
                         </View>
-                    </View>
+                    }
 
-                </ImageBackground>
-            </View >
+
+
+                </View>
+
+            </ImageBackground>
+        </View >
     );
 }
 

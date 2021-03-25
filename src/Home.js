@@ -7,7 +7,7 @@ export default HomeScreen = ({ navigation }) => {
     const [input, setInput] = React.useState("")
     const [disabled, setDisabled] = useState(true)
     function apiCall() {
-        axios.post("http://13.233.186.159:5500/test/" + input.trim()).then((response) => {
+        axios.post("https://triton300.herokuapp.com/test/" + input.trim()).then((response) => {
             console.log(response.status, "response data " + response.data)
             var res = response.data
             navigation.navigate("GraphScreen", {
