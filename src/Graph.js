@@ -82,6 +82,9 @@ export default GraphScreen = ({ route }) => {
                     <Text style={{
                         color: "#26538e", fontSize: 18, fontWeight: "bold", marginTop: "2%"
                         , marginBottom: "3%", paddingLeft: "4%"
+
+
+
                     }}>
                         You Statement was -
                     </Text>
