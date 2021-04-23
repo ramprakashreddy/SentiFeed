@@ -18,6 +18,7 @@ import { PieChart } from 'react-native-svg-charts'
 import axios from 'axios';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+//comment
 
 
 export default GraphScreen = ({ route }) => {
@@ -76,12 +77,14 @@ export default GraphScreen = ({ route }) => {
                     <Text>
                         Sentifeed provides you with your individual feedback {"\n"}as well as total count
                     </Text>
-
                 </View>
                 <View style={{ flex: 1 }}>
                     <Text style={{
                         color: "#26538e", fontSize: 18, fontWeight: "bold", marginTop: "2%"
                         , marginBottom: "3%", paddingLeft: "4%"
+
+
+
                     }}>
                         You Statement was -
                     </Text>
