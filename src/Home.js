@@ -43,10 +43,10 @@ export default HomeScreen = ({ navigation }) => {
                             You will be exploring our website You will be exploring {"\n"}our websiteYou will be exploring our website
                         </Text>
                     </View>
-                    <View style={{ flex: 2.5, justifyContent: 'center' }}>
+                    <View style={{ flex: 1, justifyContent: 'center' }}>
                         <View style={{
                             width: width - 20, height: height / 3,
-                            backgroundColor: "#dbf0f7", alignSelf: 'center',
+                            backgroundColor: "red", alignSelf: 'center',
                             justifyContent: 'center', borderRadius: 10, marginTop: "10%"
 
                         }}>
@@ -54,14 +54,14 @@ export default HomeScreen = ({ navigation }) => {
                             <Text style={{
                                 paddingLeft: "6%", marginBottom: "5%",
                                 fontWeight: 'bold'
-                                , fontSize: 18, color: "#26538E"
+                                , fontSize: 32, color: "#26538E"
                             }}>
                                 Enter Your Feedback
                             </Text>
                             <TextInput
                                 style={{
                                     width: width - 60, height: height / 7,
-                                    alignSelf: 'center', backgroundColor: "#ffffff",
+                                    alignSelf: 'center', backgroundColor: "red",
                                     borderRadius: 10, paddingLeft: "4%", paddingTop: "4%",
                                     textAlign: 'left',
                                     textAlignVertical: 'top',
