@@ -40,20 +40,7 @@ const App = () => {
 
           }}
         />
-        <Stack.Screen name="GraphScreen" component={Graph}
-          options={{
-            title: "",
-            headerLeft: () => (
-              <View style={{ marginLeft: 10 }}>
-                <Image
-                  source={require("./src/images/Header.png")}
-                  style={{ width: 180, height: 30 }}
-                />
-              </View>
-            ),
-
-          }}
-        />
+     
 
 
       </Stack.Navigator>
